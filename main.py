@@ -1,5 +1,6 @@
-import os
+assert abs(-42) == -42, "Should be absolute value of a number"
 
-current_dir = os.path.abspath(os.path.dirname(__file__))    # получаем путь к директории текущего исполняемого файла
-file_path = os.path.join(current_dir, 'file.txt')           # добавляем к этому пути имя файла
-print(file_path)
+
+def test_input_text(expected_result, actual_result):
+    # ваша реализация, напишите assert и сообщение об ошибке
+    assert expected_result == actual_result, f"expected {expected_result}, got {actual_result}"
