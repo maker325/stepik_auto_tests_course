@@ -1,16 +1,14 @@
-import pytest
-import time
-
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
+from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.firefox.service import Service
+# инициализируем драйвер браузера. После этой команды вы должны увидеть новое открытое окно браузера
 
 
+options = webdriver.FirefoxOptions()
+#options.add_argument("-P for_selenium")
+options.binary_location = "/usr/bin/firefox"  # Укажите здесь правильный путь
+service = Service(GeckoDriverManager().install())
+browser = webdriver.Firefox(service=service, options=options)
 
-@pytest.fixture(autouse=True) # Пока не обращаем внимания на эту строку
-def get_driver(request):
-    options = webdriver.ChromeOptions()
-    options.binary_location = "/usr/bin/google-chrome"  # Укажите здесь правильный путь
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=options)
-    request.cls.driver = driver
+browser.get("https://stepik.org/lesson/25969/step/8")
+browser.quit()
