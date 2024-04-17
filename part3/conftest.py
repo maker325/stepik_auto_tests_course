@@ -12,6 +12,7 @@ def browser():
     options.binary_location = "/usr/bin/google-chrome"  # Укажите здесь правильный путь
     service = Service(ChromeDriverManager().install())
     browser = webdriver.Chrome(service=service, options=options)
+    browser.implicitly_wait(20)
     yield browser
     print("\nquit browser..")
     browser.quit()

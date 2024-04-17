@@ -22,8 +22,10 @@ def test_authorization(browser, load_config, link_code):
     button2.click()
     time.sleep(5)
     input3 = browser.find_element(By.CSS_SELECTOR, "textarea")
+    #WebDriverWait(browser, 10).until(ec.presence_of_element_located((By.CSS_SELECTOR, "textarea")))
     answer = str(math.log(int(time.time())))
     input3.send_keys(answer)
+    time.sleep(3)
     button3 = WebDriverWait(browser, 10).until(ec.element_to_be_clickable((By.CSS_SELECTOR, "button.submit-submission")))
     button3.click()
     element = WebDriverWait(browser, 10).until(
