@@ -9,6 +9,5 @@ options = webdriver.FirefoxOptions()
 options.binary_location = "/usr/bin/firefox"  # Укажите здесь правильный путь
 service = Service(GeckoDriverManager().install())
 browser = webdriver.Firefox(service=service, options=options)
-
 browser.get("https://stepik.org/lesson/25969/step/8")
 browser.quit()

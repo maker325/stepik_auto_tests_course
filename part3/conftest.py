@@ -2,17 +2,35 @@ import json
 import pytest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.firefox.service import Service as FFservice
 
 
-@pytest.fixture(scope="class")
-def browser():
-    print("\nstart browser for test..")
-    options = webdriver.ChromeOptions()
-    options.binary_location = "/usr/bin/google-chrome"  # Укажите здесь правильный путь
-    service = Service(ChromeDriverManager().install())
-    browser = webdriver.Chrome(service=service, options=options)
-    browser.implicitly_wait(20)
+def pytest_addoption(parser):
+    parser.addoption('--browser_name', action='store', default="chrome",
+                     help="Choose browser: chrome or firefox")
+
+
+@pytest.fixture(scope="function")
+def browser(request):
+    browser_name = request.config.getoption("browser_name")
+    browser = None
+    if browser_name == "chrome":
+        print("\nstart chrome browser for test..")
+        options = webdriver.ChromeOptions()
+        options.binary_location = "/usr/bin/google-chrome"  # Укажите здесь правильный путь
+        service = ChromeService(ChromeDriverManager().install())
+        browser = webdriver.Chrome(service=service, options=options)
+    elif browser_name == "firefox":
+        print("\nstart firefox browser for test..")
+        options = webdriver.FirefoxOptions()
+        options.binary_location = "/usr/bin/firefox"  # Укажите здесь правильный путь
+        service = FFservice(GeckoDriverManager().install())
+        browser = webdriver.Firefox(service=service, options=options)
+    else:
+        raise pytest.UsageError("--browser_name should be chrome or firefox")
+    browser.implicitly_wait(10)
     yield browser
     print("\nquit browser..")
     browser.quit()
@@ -25,4 +43,3 @@ def load_config():
         # С помощью библиотеки json читаем и возвращаем результат
         config = json.load(config_file)
         return config
-
