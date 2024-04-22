@@ -1,6 +1,5 @@
 import pytest
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 
 
@@ -15,8 +14,8 @@ def browser(request):
     user_language = request.config.getoption("language")
     options = webdriver.ChromeOptions()
     options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
-    options.binary_location = "/usr/bin/google-chrome"  # Укажите здесь правильный путь
-    service = ChromeService(ChromeDriverManager().install())
+    executable_path = '/usr/bin/chromedriver'
+    service = ChromeService(executable_path=executable_path)
     browser = webdriver.Chrome(service=service, options=options)
     browser.implicitly_wait(10)
     yield browser

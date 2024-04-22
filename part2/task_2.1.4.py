@@ -13,6 +13,7 @@ options = webdriver.ChromeOptions()
 options.binary_location = "/usr/bin/google-chrome"  # Укажите здесь правильный путь
 
 link = "https://suninjuly.github.io/math.html"
+
 browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 try:

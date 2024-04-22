@@ -1,7 +1,6 @@
 import json
 import pytest
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.firefox.service import Service as FFservice
@@ -19,8 +18,8 @@ def browser(request):
     if browser_name == "chrome":
         print("\nstart chrome browser for test..")
         options = webdriver.ChromeOptions()
-        options.binary_location = "/usr/bin/google-chrome"  # Укажите здесь правильный путь
-        service = ChromeService(ChromeDriverManager().install())
+        executable_path = '/usr/bin/chromedriver'
+        service = ChromeService(executable_path=executable_path)
         browser = webdriver.Chrome(service=service, options=options)
     elif browser_name == "firefox":
         print("\nstart firefox browser for test..")
